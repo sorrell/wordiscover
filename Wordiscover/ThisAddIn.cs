@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.Collections.Generic;
 using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Word;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using Microsoft.Office.Tools;
-using System.Runtime.InteropServices;
 
 namespace Wordiscover
 {
@@ -21,50 +13,47 @@ namespace Wordiscover
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            findPane = new FindPane();
-            myCustomTaskPane = this.CustomTaskPanes.Add(findPane, "Wordiscover");
             docToPaneMapping = new Dictionary<Word.Document, CustomTaskPane>();
 
+            foreach (Word.Document doc in this.Application.Documents)
+            {
+                HandleDocMapping(doc);
+            }
+            //foreach (Word.ProtectedViewWindow pvw in this.Application.ProtectedViewWindows)
+            //{
+            //    HandleDocMapping(pvw.Document);
+            //}
             this.Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(ClosePaneOnDocClose);
             this.Application.DocumentChange += new Word.ApplicationEvents4_DocumentChangeEventHandler(DocHasChanges);
             this.Application.DocumentOpen += new Word.ApplicationEvents4_DocumentOpenEventHandler(DocLoaded);
-            this.Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(WindowActivated);
-            this.Application.ProtectedViewWindowActivate += new Word.ApplicationEvents4_ProtectedViewWindowActivateEventHandler(ProtectedWindowActivated); 
+            //this.Application.ProtectedViewWindowOpen += new Word.ApplicationEvents4_ProtectedViewWindowOpenEventHandler(ProtectedWindowOpened);
         }
 
         private void DocLoaded(Word.Document Doc)
         {
-
+            HandleDocMapping(DocumentHelpers.ActiveDocument);
+            myCustomTaskPane.Visible = true;
             findPane.GetParagraphMarkers();
             findPane.DocumentHasChanges = false;
         }
 
-        private void ProtectedWindowActivated(Word.ProtectedViewWindow PvWn)
+        private void ProtectedWindowOpened(Word.ProtectedViewWindow PvWn)
         {
-            var doc = PvWn.Document;
+            HandleDocMapping(DocumentHelpers.ActiveDocument);
+            myCustomTaskPane.Visible = true;
+            findPane.GetParagraphMarkers();
+            findPane.DocumentHasChanges = false;
+        }
+
+        private void HandleDocMapping(Word.Document doc)
+        {
             if (!docToPaneMapping.ContainsKey(doc))
             {
-                addPaneToDictionary(doc);
+                findPane = new FindPane();
+                CustomTaskPane ctp = this.CustomTaskPanes.Add(findPane, "Wordiscover", doc.Windows[1]);
+                docToPaneMapping[doc] = ctp;
             }
             myCustomTaskPane = docToPaneMapping[doc];
-            myCustomTaskPane.Visible = true;
-        }
-
-        private void WindowActivated(Word.Document Doc, Word.Window Wn)
-        {
-            if (!docToPaneMapping.ContainsKey(Doc))
-            {
-                addPaneToDictionary(Doc);
-            }
-            myCustomTaskPane = docToPaneMapping[Doc];
-            myCustomTaskPane.Visible = true;
-        }
-
-        private void addPaneToDictionary(Word.Document Doc)
-        {
-            findPane = new FindPane();
-            CustomTaskPane ctp = this.CustomTaskPanes.Add(findPane, "Wordiscover", Doc.ActiveWindow);
-            docToPaneMapping[Doc] = ctp;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
@@ -73,28 +62,28 @@ namespace Wordiscover
 
         private void DocHasChanges()
         {
-            findPane.DocumentHasChanges = true;
+            if (findPane != null)
+                findPane.DocumentHasChanges = true;
         }
 
         private void ClosePaneOnDocClose(Word.Document Doc, ref bool b)
         {
-            if (docToPaneMapping.ContainsKey(Doc))
+            if (docToPaneMapping.ContainsKey(DocumentHelpers.ActiveDocument))
             {
-                CustomTaskPane ctp = docToPaneMapping[Doc];
+                CustomTaskPane ctp = docToPaneMapping[DocumentHelpers.ActiveDocument];
                 this.CustomTaskPanes.Remove(ctp);
-                docToPaneMapping.Remove(Doc);
+                docToPaneMapping.Remove(DocumentHelpers.ActiveDocument);
             }
-
-            //if (myCustomTaskPane.Visible)
-            //    myCustomTaskPane.Visible = false;
         }
         public void ToggleFindPane()
         {
-            if (this.Application.ProtectedViewWindows.Count > 0 || (this.Application.Documents.Count > 0 && this.Application.ActiveDocument != null))
-                myCustomTaskPane.Visible = !myCustomTaskPane.Visible;
+            if (this.Application.ActiveProtectedViewWindow != null)
+            {
+                MessageBox.Show("You must have a document open and in EDIT mode (not Protected View) to use Wordiscover.", "Wordiscover Requirements", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
-                MessageBox.Show("You must have a document open to use Wordiscover.");
+                myCustomTaskPane.Visible = !myCustomTaskPane.Visible;
             }
                 
         }
