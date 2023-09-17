@@ -201,12 +201,14 @@
             // 
             // btnFind
             // 
-            this.btnFind.Location = new System.Drawing.Point(133, 3);
+            this.btnFind.BackColor = System.Drawing.Color.YellowGreen;
+            this.btnFind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFind.Location = new System.Drawing.Point(138, 3);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(52, 23);
             this.btnFind.TabIndex = 2;
             this.btnFind.Text = "Find";
-            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.UseVisualStyleBackColor = false;
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // progressBar
@@ -297,11 +299,11 @@
             // labelResults
             // 
             this.labelResults.AutoSize = true;
-            this.labelResults.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelResults.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelResults.ForeColor = System.Drawing.Color.SteelBlue;
-            this.labelResults.Location = new System.Drawing.Point(6, -3);
+            this.labelResults.Location = new System.Drawing.Point(11, -3);
             this.labelResults.Name = "labelResults";
-            this.labelResults.Size = new System.Drawing.Size(60, 21);
+            this.labelResults.Size = new System.Drawing.Size(64, 21);
             this.labelResults.TabIndex = 2;
             this.labelResults.Text = "Results";
             this.labelResults.Click += new System.EventHandler(this.labelResults_Click);
@@ -450,11 +452,11 @@
             // labelProximity
             // 
             this.labelProximity.AutoSize = true;
-            this.labelProximity.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelProximity.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelProximity.ForeColor = System.Drawing.Color.SteelBlue;
-            this.labelProximity.Location = new System.Drawing.Point(6, -3);
+            this.labelProximity.Location = new System.Drawing.Point(10, -3);
             this.labelProximity.Name = "labelProximity";
-            this.labelProximity.Size = new System.Drawing.Size(76, 21);
+            this.labelProximity.Size = new System.Drawing.Size(85, 21);
             this.labelProximity.TabIndex = 2;
             this.labelProximity.Text = "Proximity";
             this.labelProximity.Click += new System.EventHandler(this.labelProximity_Click);
@@ -503,9 +505,10 @@
             // 
             // btnClear
             // 
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Location = new System.Drawing.Point(87, 3);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(40, 23);
+            this.btnClear.Size = new System.Drawing.Size(48, 23);
             this.btnClear.TabIndex = 1;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -546,11 +549,11 @@
             // labelFind
             // 
             this.labelFind.AutoSize = true;
-            this.labelFind.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFind.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFind.ForeColor = System.Drawing.Color.SteelBlue;
-            this.labelFind.Location = new System.Drawing.Point(6, -3);
+            this.labelFind.Location = new System.Drawing.Point(11, -3);
             this.labelFind.Name = "labelFind";
-            this.labelFind.Size = new System.Drawing.Size(40, 21);
+            this.labelFind.Size = new System.Drawing.Size(43, 21);
             this.labelFind.TabIndex = 12;
             this.labelFind.Text = "Find";
             this.labelFind.Click += new System.EventHandler(this.labelFind_Click);
@@ -674,11 +677,11 @@
             // labelReplace
             // 
             this.labelReplace.AutoSize = true;
-            this.labelReplace.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelReplace.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelReplace.ForeColor = System.Drawing.Color.SteelBlue;
-            this.labelReplace.Location = new System.Drawing.Point(6, -3);
+            this.labelReplace.Location = new System.Drawing.Point(11, -3);
             this.labelReplace.Name = "labelReplace";
-            this.labelReplace.Size = new System.Drawing.Size(64, 21);
+            this.labelReplace.Size = new System.Drawing.Size(70, 21);
             this.labelReplace.TabIndex = 2;
             this.labelReplace.Text = "Replace";
             this.labelReplace.Click += new System.EventHandler(this.labelReplace_Click);
@@ -726,6 +729,7 @@
             // 
             // buttonReplaceAll
             // 
+            this.buttonReplaceAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReplaceAll.Location = new System.Drawing.Point(93, 3);
             this.buttonReplaceAll.Name = "buttonReplaceAll";
             this.buttonReplaceAll.Size = new System.Drawing.Size(76, 23);
@@ -736,6 +740,7 @@
             // 
             // buttonReplace
             // 
+            this.buttonReplace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReplace.Location = new System.Drawing.Point(23, 3);
             this.buttonReplace.Name = "buttonReplace";
             this.buttonReplace.Size = new System.Drawing.Size(64, 23);

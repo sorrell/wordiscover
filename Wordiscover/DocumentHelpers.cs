@@ -16,14 +16,23 @@ namespace Wordiscover
     {
         static DocumentHelpers()
         {
-            ActiveDocument = Globals.ThisAddIn.Application.ActiveDocument;
+            ActiveDocument = null; //Globals.ThisAddIn.Application.ActiveDocument;
         }
         private static Word.Document _activeDocument;
         public static Word.Document ActiveDocument 
         {
             get 
             {
-                _activeDocument = Globals.ThisAddIn.Application.ActiveDocument; 
+                
+                if (Globals.ThisAddIn.Application.ProtectedViewWindows.Count > 0 && Globals.ThisAddIn.Application.ActiveProtectedViewWindow != null)
+                {
+                    _activeDocument = Globals.ThisAddIn.Application.ActiveProtectedViewWindow.Document;
+                }
+                else if (Globals.ThisAddIn.Application.Documents.Count > 0 && Globals.ThisAddIn.Application.ActiveDocument != null)
+                {
+                    _activeDocument = Globals.ThisAddIn.Application.ActiveDocument;
+                }
+
                 return _activeDocument;
             }
             set { _activeDocument = value; } 
